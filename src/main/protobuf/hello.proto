@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.hunorkovacs.grpctry.grpc";
+option java_outer_classname = "HelloGrpcProto";
+
+package grpctry;
+
+service GreeterService {
+    rpc StreamHellos (stream HelloRequest) returns (stream HelloResponse) {}
+}
+
+message HelloRequest {
+    string name = 1;
+}
+
+message HelloResponse {
+    string message = 1;
+}
