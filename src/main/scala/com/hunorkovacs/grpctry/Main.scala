@@ -1,7 +1,7 @@
 package com.hunorkovacs.grpctry
 
 import akka.actor.ActorSystem
-import akka.stream.ActorMaterializer
+import akka.http.scaladsl.Http
 import org.slf4j.LoggerFactory
 
 import scala.concurrent.Await
@@ -10,15 +10,24 @@ import scala.concurrent.duration._
 object Main extends App {
 
   private val logger = LoggerFactory.getLogger(getClass)
-  implicit private val sys: ActorSystem = ActorSystem("json-validation")
-  implicit private val mat: ActorMaterializer = ActorMaterializer()
+  implicit private val sys: ActorSystem = ActorSystem("grpc-try")
+  import sys.dispatcher
+
+  private val greeterServer = new GreeterServer(sys)
+  private val bindingF = greeterServer.run()
 
   logger.info("Hello gRPC!")
 
-  shutdown()
+  scala.sys addShutdownHook shutdown
 
   private def shutdown() = {
     logger.info("Exiting...")
-    Await.ready(sys.terminate(), 5 seconds)
+    val sysTerminated = for {
+      binding <- bindingF
+      _       <- binding.unbind()
+      _       <- Http().shutdownAllConnectionPools()
+      sysTerm <- sys.terminate()
+    } yield sysTerm
+    Await.ready(sysTerminated, 5 seconds)
   }
 }

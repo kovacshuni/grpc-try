@@ -39,7 +39,9 @@ libraryDependencies ++= {
     "com.typesafe.akka" %% "akka-http-testkit" % akkaHttpVersion % Test,
     "org.specs2" %% "specs2-core" % specs2Version % Test,
     "org.specs2" %% "specs2-mock" % specs2Version % Test,
-    "org.mockito" % "mockito-core" % "3.1.0" % Test
+    "org.mockito" % "mockito-core" % "3.1.0" % Test,
+
+    "org.mortbay.jetty.alpn" % "alpn-boot" % "8.1.13.v20181017"
   )
 }
 
@@ -50,11 +52,11 @@ scalacOptions in ThisBuild ++= Seq(
   "-deprecation"
 )
 
-PB.targets in Compile := Seq(
-  scalapb.gen() -> (sourceManaged in Compile).value
-)
+//PB.targets in Compile := Seq(
+//  scalapb.gen(flatPackage = false) -> (sourceManaged in Compile).value
+//)
 
-//enablePlugins(AkkaGrpcPlugin)
+enablePlugins(AkkaGrpcPlugin)
 // ALPN agent
-//enablePlugins(JavaAgent)
-//javaAgents += "org.mortbay.jetty.alpn" % "jetty-alpn-agent" % "2.0.9" % "runtime;test"
+enablePlugins(JavaAgent)
+javaAgents += "org.mortbay.jetty.alpn" % "jetty-alpn-agent" % "2.0.9" % "runtime;test"
