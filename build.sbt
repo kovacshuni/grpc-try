@@ -35,6 +35,8 @@ scalacOptions in ThisBuild ++= Seq(
   "-deprecation"
 )
 
+javaOptions += "-Djava.util.logging.config.file=src/main/resources/grpc-debug-logging.properties"
+
 // not needed with akka grpc
 //PB.targets in Compile := Seq(
 //  scalapb.gen(flatPackage = false) -> (sourceManaged in Compile).value

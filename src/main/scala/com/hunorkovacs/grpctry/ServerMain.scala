@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory
 import scala.concurrent.Await
 import scala.concurrent.duration._
 
-object Main extends App {
+object ServerMain extends App {
 
   private val logger = LoggerFactory.getLogger(getClass)
   implicit private val sys: ActorSystem = ActorSystem("grpc-try")
