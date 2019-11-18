@@ -1,4 +1,4 @@
-package com.hunorkovacs.grpctry
+package com.hunorkovacs.grpctry.server
 
 import akka.NotUsed
 import akka.stream.Materializer
