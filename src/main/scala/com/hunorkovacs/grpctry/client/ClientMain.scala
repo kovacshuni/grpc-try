@@ -1,17 +1,15 @@
 package com.hunorkovacs.grpctry.client
 
-import akka.{Done, NotUsed}
 import akka.actor.ActorSystem
 import akka.grpc.GrpcClientSettings
-import akka.http.scaladsl.Http
 import akka.stream.ActorMaterializer
 import akka.stream.scaladsl.Source
+import akka.{Done, NotUsed}
 import com.hunorkovacs.grpctry.grpc.{GreeterService, GreeterServiceClient, HelloRequest, HelloResponse}
-import com.hunorkovacs.grpctry.server.ServerMain.{binding, logger, sys}
 import org.slf4j.LoggerFactory
 
-import scala.concurrent.{Await, ExecutionContextExecutor, Future}
 import scala.concurrent.duration._
+import scala.concurrent.{Await, ExecutionContextExecutor, Future}
 import scala.util.{Failure, Success}
 
 object ClientMain extends App {
