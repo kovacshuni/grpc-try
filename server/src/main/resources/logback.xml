@@ -1,0 +1,20 @@
+<configuration>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>level=%level date="%d" logger="%logger" actor="%X{akkaSource}" %message%n%xException</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="com.hunorkovacs.grpctry" level="DEBUG" additivity="false">
+        <appender-ref ref="STDOUT" />
+    </logger>
+
+    <logger name="akka" level="INFO" additivity="false">
+        <appender-ref ref="STDOUT" />
+    </logger>
+
+    <root level="ERROR">
+        <appender-ref ref="STDOUT" />
+    </root>
+    <statusListener class="ch.qos.logback.core.status.NopStatusListener" />
+</configuration>
